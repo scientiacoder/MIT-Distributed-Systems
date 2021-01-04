@@ -13,5 +13,5 @@ Lab的地址: https://pdos.csail.mit.edu/6.824/
      - Recoverability:
         - NV(non-volatile storage) Storage： 断电后能恢复，但是代价昂贵，expensive to update, 应该避免使用
         - Replication: identical servers
-     - Strong Consistency: 非常expensive, 不推荐
+     - Strong Consistency: 非常expensive, 不推荐 10ms网络延迟communication cost, 能丢失百万条指令
      - **Weak** Consistency: 推荐

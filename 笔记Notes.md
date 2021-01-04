@@ -15,3 +15,7 @@ Lab的地址: https://pdos.csail.mit.edu/6.824/
         - Replication: identical servers
      - Strong Consistency: 非常expensive, 不推荐 10ms网络延迟communication cost, 能丢失百万条指令
      - **Weak** Consistency: 推荐
+ 4. MapReduce:
+    - Reduce这一块要用到网络通信，网络通信要消耗带宽，如果有10TB文件要MapReduce，则Reduce阶段要在网络中发送10TB，最后产出10TB，网络消耗非常大
+ 5. 分布式系统要用到很多的网络通信，网络这一块很重要
+ 

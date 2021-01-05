@@ -57,4 +57,6 @@ Lab的地址: https://pdos.csail.mit.edu/6.824/
       - New replicas 备份从挂了，也需要一个新的备份
   4. 一般情况下是Primary收到一条指令(packet?)，然后发给Backup也执行这条指令(packet)，但是有一些指令是weird instructions比如获取当前时间，获得进程ID，随机数之类的，
   在主和从会产生不同的结果，这种情况下从需要等主执行完后将结果告诉它
-  5. **Output Rule**: Primary can not generate output(ACK) until all the backups generate output to the primary.
+  5. **Output Rule**: Primary can not generate output(ACK) to the client until all the backups generate output to the primary.
+  6. 一般情况下，client和Primary以及Secondary连接使用TCP协议，Primary把TCP包转给Secondary，回复ack时会把tcp Sequence number带上，所以
+  如果client收到两份ack(primary and secondary）通过查看Seq，会把第二个Secondary发的给drop掉

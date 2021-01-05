@@ -39,5 +39,6 @@ Lab的地址: https://pdos.csail.mit.edu/6.824/
    
  以下是GFS write时的操作，左边INCREMENT V#是指Master increment, 右边如果primary returns "no" to client, 则client会继续发起这个写请求
  直到成功为止，Google好像并没有提不成功的情况  
- ![gfs-write](./imgs/gfs-write.png)
+ ![gfs-write](./imgs/gfs-write.png)  
+ **GFS没有Strong Consistency, 所以存的东西可能丢失、重复！**
  

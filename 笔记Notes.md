@@ -58,5 +58,7 @@ Lab的地址: https://pdos.csail.mit.edu/6.824/
   4. 一般情况下是Primary收到一条指令(packet?)，然后发给Backup也执行这条指令(packet)，但是有一些指令是weird instructions比如获取当前时间，获得进程ID，随机数之类的，
   在主和从会产生不同的结果，这种情况下从需要等主执行完后将结果告诉它
   5. **Output Rule**: Primary can not generate output(ACK) to the client until all the backups generate output to the primary.
-  6. 一般情况下，client和Primary以及Secondary连接使用TCP协议，Primary把TCP包转给Secondary，回复ack时会把tcp Sequence number带上，所以
+  6. 一般情况下，client和Primary以及Secondary连接使用**TCP协议**，Primary把TCP包转给Secondary，回复ack时会把**tcp Sequence number**带上，所以
   如果client收到两份ack(primary and secondary）通过查看Seq，会把第二个Secondary发的给drop掉
+  7. **Split Brain**(脑裂)的解决：让第三方authority来确定谁是Primary, 有一个TEST-AND-SET Server，让左脑和右脑同时发送test-and-set命令给这个Server，
+  Server先收到谁的命令就让谁set为真正的Primary.

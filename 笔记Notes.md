@@ -22,3 +22,9 @@ Lab的地址: https://pdos.csail.mit.edu/6.824/
 ## Lecture 2 RPC and Threads
  1. MIT推荐书籍**Effective Go**
  2. ```go run -race xxx.go```可以用来进行竞争检查
+ ```go
+ ch := make(chan []string)
+ for urls := range ch{
+    update ch // 这个for可能永远都不会停止
+ }
+ ```

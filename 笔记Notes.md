@@ -40,5 +40,7 @@ Lab的地址: https://pdos.csail.mit.edu/6.824/
  以下是GFS write时的操作，左边INCREMENT V#是指Master increment, 右边如果primary returns "no" to client, 则client会继续发起这个写请求
  直到成功为止，Google好像并没有提不成功的情况  
  ![gfs-write](./imgs/gfs-write.png)  
- **GFS没有Strong Consistency, 所以存的东西可能丢失、重复！**
+  - **GFS没有Strong Consistency, 所以存的东西可能丢失、重复！**
+  - 如果Pimary挂了，在Secondary选举为新的Primary后，要进行同步Sync, 因为可能有Last set operation有的做了有的没做
+  - GFS使用单一节点作为Master，其实是有问题的，出现Out of Memory RAM，所有东西都在内存里，加内存不够
  

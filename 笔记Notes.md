@@ -55,3 +55,6 @@ Lab的地址: https://pdos.csail.mit.edu/6.824/
       - Cut-over 主从转换，比如主机挂了需要提升一个新的主机
       - Anomalies 外界不应该感知到主机挂了
       - New replicas 备份从挂了，也需要一个新的备份
+  4. 一般情况下是Primary收到一条指令(packet?)，然后发给Backup也执行这条指令(packet)，但是有一些指令是weird instructions比如获取当前时间，获得进程ID，随机数之类的，
+  在主和从会产生不同的结果，这种情况下从需要等主执行完后将结果告诉它
+  5. **Output Rule**: Primary can not generate output(ACK) until all the backups generate output to the primary.

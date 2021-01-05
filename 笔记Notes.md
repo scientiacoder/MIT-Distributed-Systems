@@ -33,6 +33,11 @@ Lab的地址: https://pdos.csail.mit.edu/6.824/
  1. GFS是在一个Data center里，而不是全球都有around the world
  2. GFS是Big sequential access, 就是GB、TB大文件，而不是random的  
  3. GFS是基于Master Worker的，Master DATA见下图
+ 4. version 表示最新的版本 write的时候要比较，然后在最新的版本append
  
- ![master-data](./imgs/master-data.png) 
+ ![master-data](./imgs/master-data.png)
+   
+ 以下是GFS write时的操作，左边INCREMENT V#是指Master increment, 右边如果primary returns "no" to client, 则client会继续发起这个写请求
+ 直到成功为止，Google好像并没有提不成功的情况  
+ ![gfs-write](./imgs/gfs-write.png)
  

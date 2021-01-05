@@ -43,4 +43,10 @@ Lab的地址: https://pdos.csail.mit.edu/6.824/
   - **GFS没有Strong Consistency, 所以存的东西可能丢失、重复！**
   - 如果Pimary挂了，在Secondary选举为新的Primary后，要进行同步Sync, 因为可能有Last set operation有的做了有的没做
   - GFS使用单一节点作为Master，其实是有问题的，出现Out of Memory RAM，所有东西都在内存里，加内存不够
- 
+   
+ ## Lecture 4 Primary-Backup Replication 主从复制
+  1. **State transfer**: Primary sends state to the secondary(Sync) e.g Send memory to the backup.
+      - sends **memory**
+  2. **Replicated State Mache**: Assuming state transfer is deterministic unless there are external factors. Thus, Primary do not send state, instead , it sends
+  external factors to the secondary (backup).
+      - sends **operations from client**

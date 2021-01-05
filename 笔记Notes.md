@@ -30,4 +30,9 @@ Lab的地址: https://pdos.csail.mit.edu/6.824/
  ```
  ![bad-repl](./imgs/bad-repl.png)  
  S1和S2处理C1、C2请求的(时间)顺序不同，出现不同的结果，没有consistency，所以是bad design  
- 1. e
+ 1. GFS是在一个Data center里，而不是全球都有around the world
+ 2. GFS是Big sequential access, 就是GB、TB大文件，而不是random的  
+ 3. GFS是基于Master Worker的，Master DATA见下图
+ 
+ ![master-data](./imgs/master-data.png) 
+ 

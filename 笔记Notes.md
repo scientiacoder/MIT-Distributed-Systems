@@ -12,14 +12,14 @@ Lab的地址: https://pdos.csail.mit.edu/6.824/
      - Availability
      - Recoverability:
         - NV(non-volatile storage) Storage： 断电后能恢复，但是代价昂贵，expensive to update, 应该避免使用
-        - Replication: identical servers
+        - Replication: identical servers 推荐
      - Strong Consistency: 非常expensive, 不推荐 10ms网络延迟communication cost, 能丢失百万条指令
      - **Weak** Consistency: 推荐
  4. MapReduce:
     - Reduce这一块要用到网络通信，网络通信要消耗带宽，如果有10TB文件要MapReduce，则Reduce阶段要在网络中发送10TB，最后产出10TB，网络消耗非常大
  5. 分布式系统要用到很多的网络通信，网络这一块很重要
 
-## Lecture 2 RPC and Threads
+## Lecture 2&3 RPC and Threads & GFS
  1. MIT推荐书籍**Effective Go**
  2. ```go run -race xxx.go```可以用来进行竞争检查
  ```go
@@ -28,3 +28,6 @@ Lab的地址: https://pdos.csail.mit.edu/6.824/
     update ch // 这个for可能永远都不会停止
  }
  ```
+ ![bad-repl](./imgs/bad-repl.png)  
+ S1和S2处理C1、C2请求的(时间)顺序不同，出现不同的结果，没有consistency，所以是bad design  
+ 1. e

@@ -50,3 +50,8 @@ Lab的地址: https://pdos.csail.mit.edu/6.824/
   2. **Replicated State Mache**: Assuming state transfer is deterministic unless there are external factors. Thus, Primary do not send state, instead , it sends
   external factors to the secondary (backup).
       - sends **operations from client**
+  3. What state? 主从复制考虑的问题
+      - Primary/Backup Sync 主从同步
+      - Cut-over 主从转换，比如主机挂了需要提升一个新的主机
+      - Anomalies 外界不应该感知到主机挂了
+      - New replicas 备份从挂了，也需要一个新的备份

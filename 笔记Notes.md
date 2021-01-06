@@ -85,7 +85,7 @@ func sendRPC(i int) {
 }
 
 ```
-接下来是用go做一些周期性的事情, periodic
+### 接下来是用go做一些周期性的事情, periodic
 ```go
 // periodic模型
 var done bool
@@ -118,7 +118,7 @@ func periodic() {
 }
 
 ```
-defer小知识
+### defer小知识
 ```go
 func main() {
 	println("started")
@@ -136,7 +136,7 @@ started
 2
 1
 ```
-Busy waiting以及解决(sleep等待或者使用condition)
+### Busy waiting以及解决(sleep等待或者使用condition)
 ```go
 // 首先来看这一段代码, 这段代码为什么不行，就是因为它一直在忙等待(busy waiting)，for一直尝试获取锁
 // 这样会带来大量的cpu消耗，所以一定要避免忙等busy waiting
@@ -150,7 +150,7 @@ for {
 // do something
 mu.Unlock()
 ```
-第一种解决方案：加入time.Sleep()等待
+#### 第一种解决方案：加入time.Sleep()等待
 ```go
 // 这种方法会有magic number，但是可以解决忙等的问题
 for {
@@ -162,7 +162,7 @@ for {
     time.Sleep(50 * time.Millisecond)
 }
 ```
-第二种解决方案：使用Condition(推荐)
+#### 第二种解决方案：使用Condition(推荐)
 ```go
 // Condition broadcast wait类似于signal和wait, 区别是signal用于唤醒一个
 // cond.Wait()的时候会讲这个加入到一个wait list里然后等待broadcast
@@ -187,7 +187,7 @@ for count < 5 && finished != 10{ // 这里要是false的判断
 // do something
 mu.Unlock()
 ```
-Condition模版：
+**Condition模版**：
 ```go
 mu.Lock()
 // do something that might affect the condition
@@ -195,6 +195,7 @@ cond.Broadcast()
 mu.Unlock()
 
 ----
+
 mu.Lock()
 while condition == false{
     cond.Wait()
@@ -203,3 +204,17 @@ while condition == false{
 // do something
 mu.Unlock()
 ```
+### go channel will block until other goroutine receives
+```go
+// 这段代码 fatal error: all goroutines are asleep - deadlock!
+// c <- true这行代码会一直block 因为没有receiver
+func main() {
+	c := make(chan bool)
+	c <- true // blocks until other goroutine receives
+	<-c
+}
+
+```
+ 1. you should avoid buffered channels use ```make(chan bool)``` instead of ```make(chan bool, 5)```
+ 2. waitgroup.Add()一般是在go func(){}()之前，这样保证在wg.Wait()之前
+ 

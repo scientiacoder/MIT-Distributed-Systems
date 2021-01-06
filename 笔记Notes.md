@@ -109,6 +109,8 @@ func periodic() {
 		time.Sleep(1 * time.Second)
 		mu.Lock()
 		if done {
+			// 这是个bug, 因为return前没有Unlock()!加上
+			mu.Unlock()
 			return
 		}
 		mu.Unlock()

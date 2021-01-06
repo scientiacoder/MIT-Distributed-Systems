@@ -166,6 +166,7 @@ for {
 ```go
 // Condition broadcast wait类似于signal和wait, 区别是signal用于唤醒一个
 // cond.Wait()的时候会讲这个加入到一个wait list里然后等待broadcast
+// cond要绑定一个mutex
 cond := sync.NewCond(&mu)
 for i := 0 ...{
     go func(){
@@ -177,11 +178,28 @@ for i := 0 ...{
 	}
 	finished++
 	cond.Broadcast() // broadcast一定要在Unlock()操作之前
+    }()
 }
 mu.Lock()
 for count < 5 && finished != 10{ // 这里要是false的判断
     cond.Wait()
 }
+// do something
+mu.Unlock()
+```
+Condition模版：
+```go
+mu.Lock()
+// do something that might affect the condition
+cond.Broadcast()
+mu.Unlock()
+
+----
+mu.Lock()
+while condition == false{
+    cond.Wait()
+}
+// new condition is true, and we have the lock
 // do something
 mu.Unlock()
 ```

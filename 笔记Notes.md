@@ -62,3 +62,57 @@ Lab的地址: https://pdos.csail.mit.edu/6.824/
   如果client收到两份ack(primary and secondary）通过查看Seq，会把第二个Secondary发的给drop掉
   7. **Split Brain**(脑裂)的解决：让第三方authority来确定谁是Primary, 有一个TEST-AND-SET Server，让左脑和右脑同时发送test-and-set命令给这个Server，
   Server先收到谁的命令就让谁set为真正的Primary.
+   
+ ## Lecture 5 Concurrency in Go
+```go
+// 在for中使用goroutine的时候，如果用到i，要用go func(x int)的形式将i传进去
+// 因为for会把i的值改掉，因此当goroutine运行到这一行sendRPC(x or i)这一行时
+// i会变成for更改后的值``
+func main() {
+	var wg sync.WaitGroup
+	for i := 0; i < 5; i++ {
+		wg.Add(1)
+		go func(x int) {
+			sendRPC(x)
+			wg.Done()
+		}(i)
+	}
+	wg.Wait()
+}
+
+func sendRPC(i int) {
+	println(i)
+}
+
+```
+接下来是用go做一些周期性的事情, periodic
+```go
+// periodic模型
+var done bool
+var mu sync.Mutex
+
+func main() {
+	time.Sleep(1 * time.Second)
+	println("started")
+	go periodic()
+	time.Sleep(5 * time.Second)
+	mu.Lock()
+	done = true
+	mu.Unlock()
+	println("cancelled")
+	time.Sleep(3 * time.Second) // observe no output
+}
+
+func periodic() {
+	for {
+		println("tick")
+		time.Sleep(1 * time.Second)
+		mu.Lock()
+		if done {
+			return
+		}
+		mu.Unlock()
+	}
+}
+
+```

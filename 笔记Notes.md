@@ -118,3 +118,21 @@ func periodic() {
 }
 
 ```
+defer小知识
+```go
+func main() {
+	println("started")
+	defer println("1")
+	defer println("2")
+	defer println("3")
+	defer println("4")
+	defer println("5")
+}
+// 这段代码会打印 defer小知识：按defer的顺序理解为入栈，最后出栈
+started
+5
+4
+3
+2
+1
+```

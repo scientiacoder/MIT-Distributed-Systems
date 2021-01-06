@@ -136,3 +136,52 @@ started
 2
 1
 ```
+Busy waiting以及解决(sleep等待或者使用condition)
+```go
+// 首先来看这一段代码, 这段代码为什么不行，就是因为它一直在忙等待(busy waiting)，for一直尝试获取锁
+// 这样会带来大量的cpu消耗，所以一定要避免忙等busy waiting
+for {
+    mu.Lock()
+    if count >=  || finished == 10{
+    	break
+    }
+    mu.Unlock()
+}
+// do something
+mu.Unlock()
+```
+第一种解决方案：加入time.Sleep()等待
+```go
+// 这种方法会有magic number，但是可以解决忙等的问题
+for {
+    mu.Lock()
+    if count >=  || finished == 10{
+    	break
+    }
+    mu.Unlock()
+    time.Sleep(50 * time.Millisecond)
+}
+```
+第二种解决方案：使用Condition(推荐)
+```go
+// Condition broadcast wait类似于signal和wait, 区别是signal用于唤醒一个
+// cond.Wait()的时候会讲这个加入到一个wait list里然后等待broadcast
+cond := sync.NewCond(&mu)
+for i := 0 ...{
+    go func(){
+    	vote := requestVote()
+	mu.Lock()
+	defer mu.Unlock()
+	if vote{
+	    count++
+	}
+	finished++
+	cond.Broadcast() // broadcast一定要在Unlock()操作之前
+}
+mu.Lock()
+for count < 5 && finished != 10{ // 这里要是false的判断
+    cond.Wait()
+}
+// do something
+mu.Unlock()
+```

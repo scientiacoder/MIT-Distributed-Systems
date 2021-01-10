@@ -1,10 +1,16 @@
 # MIT 6.824： Distributed Systems
+**本Repo记录了MIT 6.824课程相关的笔记以及知识点**
+  
 Youtube 链接: https://www.youtube.com/watch?v=cQP8WApzIQQ&list=PLrw6a1wE39_tb2fErI4-WkMbsvGQk9_UB&index=1&ab_channel=MIT6.824%3ADistributedSystems  
   
 Lab的地址: https://pdos.csail.mit.edu/6.824/  
   
 某位大佬的博客: https://yuerblog.cc/2020/08/13/mit-6-824-distributed-systems-%e5%ae%9e%e7%8e%b0raft-lab2a/
-
+  
+根据课程规定，本Repo将不会公开MIT-6.824 Lab相关的代码和解决方案，以鼓励更多的优质课程开源分享  
+According to the course rules and code of conduct, the Lab code and solution associated with the MIT-6.284 course will not be open sourced in order
+to encourge sharing of high quality courses like this.
+  
 ## Lecture 1 Introduction
  1. 能用一台机器解决的问题，就不要用分布式
  2. Scalability - 2x Computers -> 2x Throughput

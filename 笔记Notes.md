@@ -272,6 +272,9 @@ prevLogIndex和prevLogTerm，S2发现与其不一样，于是会拒绝这个Appe
 这时Raft Leader会有一个回溯机制，nextIndex[S2]=12, 一直往前回溯，发现在index 11的时候S2和S3是一样的，于是S2将其index 12
 和13设置为与term 6 Leader S3一致的log, 同理对S1则继续回溯，发现在index 10的时候一致
   
-
+### Persistent
+ - Log
+ - CurrentTerm
+ - VoteFor
  
   

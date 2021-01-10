@@ -245,3 +245,9 @@ MapReudce, GFS, and TEST-AND-SET Server都有一个共同点，就是都是只�
 ![raft-3](./imgs/raft3.jpeg)
   
 但是此时Replica并未执行具体操作，只是将其写入raft log中，在leader对client回复的时候，也会发送通知给replica, 在这时replica才真正执行客户命令
+  
+### 为什么replica之后才执行命令，而不是立即执行？
+因为用户client其实并不关心replica是否执行，只是否在leader处成功写入, 所以对replcia来说可以之后执行
+  
+### 为什么这么强调使用log?
+对replica来说不光关心用户的命令是什么，这些命令的**顺序**同样重要

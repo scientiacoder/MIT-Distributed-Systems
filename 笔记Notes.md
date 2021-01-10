@@ -223,4 +223,21 @@ func main() {
 ```
  1. you should avoid buffered channels use ```make(chan bool)``` instead of ```make(chan bool, 5)```
  2. waitgroup.Add()一般是在go func(){}()之前，这样保证在wg.Wait()之前
- 
+  
+## Raft协议
+MapReudce, GFS, and TEST-AND-SET Server都有一个共同点，就是都是只有一个Master节点来存储一些元数据，这样就会有**单点故障(Single point of failure)**的问题，
+为了解决这个问题，就要引入多台机器来故障容错
+  
+### Majority Vote 大多数选举
+ 1. 第一步是要有奇数(odd)台机器，而不是偶数(even)台机器
+ 2. 用户(clients)不知道它交流的是Master还是Replica，在外界看来好像只有一台机器
+  
+### 基于Raft协议的KV数据库可以看作下图
+![raft-1](./imgs/raft1.jpeg)
+  
+假设有三台服务器S1,S2,S3, 每台服务器有应用层(存储kv数据库), Raft协议层(存储操作log), 有两个客户端client对其访问，client可以
+有put和get操作，首先client对leader的应用层发出比如说put请求，此时leader的应用层会通知Raft层，加入到操作log里，与此同时，Raft层会向其它所有的Replica节点进行通信，告知此操作，其它节点的Raft层也会通知应用层，**并且对Leader的Raft层进行回应**，此时Leader的Raft层会通知应用层，然后应用层对client进行回应
+  
+![raft-2](./imgs/raft2.jpeg)
+  
+但事实上只要Leader收到大多数来自Replica的回应(>n/2,包括leader本身)，就可以对client进行回复，参照上图

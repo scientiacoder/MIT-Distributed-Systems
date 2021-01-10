@@ -231,6 +231,9 @@ MapReudce, GFS, and TEST-AND-SET Server都有一个共同点，就是都是只�
 ### Majority Vote 大多数选举
  1. 第一步是要有奇数(odd)台机器，而不是偶数(even)台机器
  2. 用户(clients)不知道它交流的是Master还是Replica，在外界看来好像只有一台机器
+ 3. **Paxos**没有Leader
+ 4. 有Leader的好处是更加的efficient, 如果没有Leader，对于操作首先可能要选出temp leader，然后达成一致，这样不够efficient
+ 5. each term will have at most 1 leader(could be 0 or 1)
   
 ### 基于Raft协议的KV数据库可以看作下图
 ![raft-1](./imgs/raft1.jpeg)
@@ -250,4 +253,6 @@ MapReudce, GFS, and TEST-AND-SET Server都有一个共同点，就是都是只�
 因为用户client其实并不关心replica是否执行，只是否在leader处成功写入, 所以对replcia来说可以之后执行
   
 ### 为什么这么强调使用log?
-对replica来说不光关心用户的命令是什么，这些命令的**顺序**同样重要
+对replica来说不光关心用户的命令是什么，这些命令的**顺序**同样重要, 并且方便reboot
+  
+**在一定的时间后，不同机器上的log可能会diverge, 但是Raft会有机制强制使得log变成相同的**

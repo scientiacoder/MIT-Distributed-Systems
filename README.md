@@ -5,7 +5,7 @@
   
 **课程**Lab的地址: https://pdos.csail.mit.edu/6.824/  
   
-Raft**诞生的论文**(为什么要Raft, Paxos为什么不好)(论文里的Figure 2真的很重要): https://pdos.csail.mit.edu/6.824/papers/raft-extended.pdf
+Raft**作者的论文**(为什么要Raft, Paxos为什么不好)(论文里的Figure 2真的很重要): https://pdos.csail.mit.edu/6.824/papers/raft-extended.pdf
   
 **Raft作者亲自讲解**Raft: https://www.youtube.com/watch?v=vYp4LYbnnW8&t=94s&ab_channel=DiegoOngaro
   

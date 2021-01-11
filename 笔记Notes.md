@@ -1,11 +1,19 @@
 # MIT 6.824： Distributed Systems
-**本Repo记录了MIT 6.824课程相关的笔记以及知识点**
+**本Repo记录了MIT 6.824课程相关的笔记以及收集了RAFT相关好的文章和视频**
   
-Youtube 链接: https://www.youtube.com/watch?v=cQP8WApzIQQ&list=PLrw6a1wE39_tb2fErI4-WkMbsvGQk9_UB&index=1&ab_channel=MIT6.824%3ADistributedSystems  
+**课程**Youtube 链接: https://www.youtube.com/watch?v=cQP8WApzIQQ&list=PLrw6a1wE39_tb2fErI4-WkMbsvGQk9_UB&index=1&ab_channel=MIT6.824%3ADistributedSystems  
   
-Lab的地址: https://pdos.csail.mit.edu/6.824/  
+**课程**Lab的地址: https://pdos.csail.mit.edu/6.824/  
   
-某位大佬的博客: https://yuerblog.cc/2020/08/13/mit-6-824-distributed-systems-%e5%ae%9e%e7%8e%b0raft-lab2a/
+Raft**诞生的论文**(为什么要Raft, Paxos为什么不好): https://pdos.csail.mit.edu/6.824/papers/raft-extended.pdf
+  
+**Raft作者亲自讲解**Raft: https://www.youtube.com/watch?v=vYp4LYbnnW8&t=94s&ab_channel=DiegoOngaro
+  
+一个不错的Raft文章(适合新手): https://kasunindrasiri.medium.com/understanding-raft-distributed-consensus-242ec1d2f521
+  
+Raft**动画在线演示**(易于理解): http://thesecretlivesofdata.com/raft/
+  
+某位国内大佬的博客(里面有lab实现): https://yuerblog.cc/2020/08/13/mit-6-824-distributed-systems-%e5%ae%9e%e7%8e%b0raft-lab2a/
   
 根据课程规定，本Repo将不会公开MIT-6.824 Lab相关的代码和解决方案，以鼓励更多的优质课程开源分享  
 According to the course rules and code of conduct, the Lab code and solution associated with the MIT-6.284 course will not be open sourced in order

@@ -230,6 +230,8 @@ MapReudce, GFS, and TEST-AND-SET Server都有一个共同点，就是都是只�
   
 一个不错的Raft文章: https://kasunindrasiri.medium.com/understanding-raft-distributed-consensus-242ec1d2f521
   
+Raft动画在线演示: http://thesecretlivesofdata.com/raft/
+  
 ### Majority Vote 大多数选举
  1. 第一步是要有奇数(odd)台机器，而不是偶数(even)台机器
  2. 用户(clients)不知道它交流的是Master还是Replica，在外界看来好像只有一台机器

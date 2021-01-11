@@ -228,6 +228,8 @@ func main() {
 MapReudce, GFS, and TEST-AND-SET Server都有一个共同点，就是都是只有一个Master节点来存储一些元数据，这样就会有**单点故障(Single point of failure)**的问题，
 为了解决这个问题，就要引入多台机器来故障容错
   
+一个不错的Raft文章: https://kasunindrasiri.medium.com/understanding-raft-distributed-consensus-242ec1d2f521
+  
 ### Majority Vote 大多数选举
  1. 第一步是要有奇数(odd)台机器，而不是偶数(even)台机器
  2. 用户(clients)不知道它交流的是Master还是Replica，在外界看来好像只有一台机器

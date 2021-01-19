@@ -288,5 +288,46 @@ prevLogIndex和prevLogTerm，S2发现与其不一样，于是会拒绝这个Appe
  - Log
  - CurrentTerm
  - VoteFor
- 
   
+## Linearizability 可线性化(alias for strong consistency)
+分布式机器是否可以表现得像一台**单机**在运行一样，成为可线性化(Linearizability)
+  
+**Linearizability**: **Execution history**(sequence of requests by many clients) is Linearizable **IF** there 
+exists some **total order**(one by one..) of operation history that matches real time for non-concurrent request and each 
+read sees the value of the most recent write in the order(就是找一个序列，这个序列就像在单机上运行一样，满足以下两个条件)**constraints**:
+ - If one operation **finish before** another started, then the one finish first has to come first in the history
+ - If some read sees a **particluar** written value, then the read must comes after the write in the order
+  
+两个操作，如果一个操作结束在另一个操作开始之前，那么先结束的在前面  
+如果一个read读到了一个值, 那么这个read操作一定在写write这个值的操作之后
+  
+举个栗子🌰
+```
+Example 1
+
+|---Wx1---|   |---Wx2---|
+      |---Rx2----|
+      	|--Rx1--|
+说明Rx1在Wx1后面, Rx2在Wx2后面, Wx2在Wx1后面
+total order: Wx1 Rx1 Wx2 Rx2
+```
+```
+Example 2:
+
+|---Wx1---|   |---Wx2---|
+      |---Rx2----|
+      		    |--Rx1--|
+Wx2在Rx2前面, Rx2在Rx1前面(finish first), Rx1在Wx2前面(因为读到Wx1写的)
+出现循环: Wx2->Rx2->Rx1->Wx2, 所以不存在total order
+```
+```
+Example 3:
+
+|---Wx0---|   |---Wx1---|
+		 |---Wx2---|
+Client 1:   |---Rx2--| |--Rx1--|
+Client 2:   |---Rx1--| |--Rx2--|
+
+这种情况下也不存在total order, 因为如果存在, Execution log应该是唯一确定的顺序, Client1和Client2看到
+应该是一样的 所以不存在total order
+```

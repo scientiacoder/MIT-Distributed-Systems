@@ -331,3 +331,12 @@ Client 2:   |---Rx1--| |--Rx2--|
 这种情况下也不存在total order, 因为如果存在, Execution log应该是唯一确定的顺序, Client1和Client2看到
 应该是一样的 所以不存在total order
 ```
+  
+## Zookeeper
+Zookeeper与Raft的区别就是Raft**读和写**都要经过Leader, 从而保证了大多数集群节点有相同的结果。
+  
+而对于Zookeeper来说，只有**写**请求会经过Leader, 而**读**请求都是直接打到Replica上, 这样会造成两个问题:
+ - Replica上的log数据可能不是最新的(因为这个replica可能不是majority)
+ - Replica上的log数据即使是最新的，但也可能没有commit
+  
+但是即使是这样，不代表Zookeeper没有用
